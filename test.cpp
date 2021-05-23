@@ -53,7 +53,11 @@ int main(int argc, char** argv){
 	cout << "keygen time: " << chrono::duration<double, milli>(t4).count()/1000 << "s" << endl;
 	
 	
-	map<int, mpz_class> b;
+	// map<int, mpz_class> b;
+	vector<mpz_class> b(a.N);
+	for (int i = 0; i < a.N; i++) {
+	  b[i] = 0;
+	}
 	
 	Ec1 digest = g1*0;
 	
@@ -89,10 +93,11 @@ int main(int argc, char** argv){
 		
 		mpz_class delta;
 		delta = rand()%10000;
-		if(b.find(updateindex[round]) == b.end())
-			b[updateindex[round]]=delta;
-		else
-			b[updateindex[round]]+=delta;
+		b[updateindex[round]]+=delta;
+		// if(b.find(updateindex[round]) == b.end())
+		// 	b[updateindex[round]]=delta;
+		// else
+		// 	b[updateindex[round]]+=delta;
 		
 		
 		t2 = chrono::high_resolution_clock::now();
@@ -125,9 +130,15 @@ int main(int argc, char** argv){
 	
 	clock_t t1 = clock();
 	bool tf3 = 1;
-	for(int i=0;i<num_txs;i++)
-		tf3 = tf3 & a.verify(digest, index[i], b[index[i]], proof[i], vrk);
+	bool tf33 = 1;
+	for(int i=0;i<num_txs;i++) {
+	  tf3 = tf3 & a.verify(digest, index[i], b[index[i]], proof[i], vrk);
+	  auto proof1 = a.prove(index[i], b, prk);
+	  tf33 = tf33 & a.verify(digest, index[i], b[index[i]], proof1, vrk);
+	}
+
 	cout<<"verification: "<<tf3<<endl;
+	cout<<"prove-verification: "<<tf33<<endl;
 	cout<<"verify time: "<<(double)(clock()-t1)/CLOCKS_PER_SEC<<"s\n";
 	
 	
