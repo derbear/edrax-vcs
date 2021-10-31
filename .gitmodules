@@ -1,0 +1,6 @@
+[submodule "ate-pairing"]
+	path = ate-pairing
+	url = https://github.com/herumi/ate-pairing
+[submodule "xbyak"]
+	path = xbyak
+	url = https://github.com/herumi/xbyak

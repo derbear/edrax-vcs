@@ -15,8 +15,9 @@ link_directories("./ate-pairing/lib/")
 
 
 
-set (CMAKE_C_FLAGS "-pthread  -march=native -O3 -maes")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pg -ggdb")
+# set (CMAKE_C_FLAGS "-pthread  -march=native -O3 -maes")
+set (CMAKE_C_FLAGS "-pthread -O3 -maes")
+# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pg -ggdb")
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=c++11")
 
 
